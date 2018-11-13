@@ -6,7 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Users {
+public class User {
 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
@@ -22,11 +22,11 @@ public class Users {
 	
 	// date?? 
 
-	public Users() {
+	public User() {
 
 	}
 
-	public Users(Long userID, String firstName, String secondName, String accountNumber, String dietryRequirements,
+	public User(Long userID, String firstName, String secondName, String accountNumber, String dietryRequirements,
 			String country, String city, String emailAddress, int yearOfBirth) {
 		super();
 		this.userID = userID;
@@ -39,5 +39,4 @@ public class Users {
 		EmailAddress = emailAddress;
 		this.yearOfBirth = yearOfBirth;
 	}
-
 }

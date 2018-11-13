@@ -8,45 +8,43 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-
-import com.qa.service.business.AccountService;
+import com.qa.service.business.UserService;
 
 @Path("/account")
 public class AccountEndpoint {
 
 	@Inject
-	private AccountService service;
+	private UserService service;
 
 	@Path("/json")
 	@GET
 	@Produces({ "application/json" })
-	public String getAllAccounts() {
-		return service.getAllAccounts();
+	public String getAllUsers() {
+		return service.getAllUsers();
 	}
 
 	@Path("/json")
 	@POST
 	@Produces({ "application/json" })
-	public String addAccount(String account) {
-		return service.addAccount(account);
+	public String addUser(String account) {
+		return service.addUser(account);
 	}
 
 	@Path("/json/{id}")
 	@PUT
 	@Produces({ "application/json" })
-	public String updateAccount(@PathParam("id") Long id, String account) {
-		return service.updateAccount(id, account);
+	public String updateUser(@PathParam("id") Long id, String account) {
+		return service.updateUser(id, account);
 	}
 
 	@Path("/json/{id}")
 	@DELETE
 	@Produces({ "application/json" })
-	public String deleteAccount(@PathParam("id") Long id) {
-		return service.deleteAccount(id);
-
+	public String deleteUser(@PathParam("id") Long id) {
+		return service.deleteUser(id);
 	}
 
-	public void setService(AccountService service) {
+	public void setService(UserService service) {
 		this.service = service;
 	}
 

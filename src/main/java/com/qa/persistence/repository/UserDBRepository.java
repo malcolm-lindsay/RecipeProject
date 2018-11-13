@@ -12,12 +12,12 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
 
-import com.qa.persistence.domain.Users;
+import com.qa.persistence.domain.User;
 import com.qa.util.JSONUtil;
 
 @Transactional(SUPPORTS)
 @Default
-public class AccountDBRepository implements AccountRepository {
+public class UserDBRepository implements UserRepository {
 
 	@PersistenceContext(unitName = "primary")
 	private EntityManager manager;
@@ -28,22 +28,22 @@ public class AccountDBRepository implements AccountRepository {
 	
 	public String getAllUsers() {
 		Query query = manager.createQuery("Select a FROM Account a");
-		Collection<Users> accounts = (Collection<Users>) query.getResultList();
+		Collection<User> accounts = (Collection<User>) query.getResultList();
 		return util.getJSONForObject(accounts);
 	}
 
 	
 	@Transactional(REQUIRED)
 	public String createUser(String User) {
-		Users anAccount = util.getObjectForJSON(User, Users.class);
+		User anAccount = util.getObjectForJSON(User, User.class);
 		manager.persist(anAccount);
 		return "{\"message\": \"account has been sucessfully added\"}";
 	}
 
 	@Transactional(REQUIRED)
 	public String updateUser(Long id, String accountToUpdate) {
-		Users updatedAccount = util.getObjectForJSON(accountToUpdate, Users.class);
-		Users accountFromDB = findUser(id);
+		User updatedAccount = util.getObjectForJSON(accountToUpdate, User.class);
+		User accountFromDB = findUser(id);
 		if (accountToUpdate != null) {
 			accountFromDB = updatedAccount;
 			manager.merge(accountFromDB);
@@ -53,15 +53,15 @@ public class AccountDBRepository implements AccountRepository {
 	
 	@Transactional(REQUIRED)
 	public String deleteUser(Long id) {
-		Users accountInDB = findUser(id);
+		User accountInDB = findUser(id);
 		if (accountInDB != null) {
 			manager.remove(accountInDB);
 		}
 		return "{\"message\": \"account sucessfully deleted\"}";
 	}
 
-	private Users findUser(Long id) {
-		return manager.find(Users.class, id);
+	private User findUser(Long id) {
+		return manager.find(User.class, id);
 	}
 
 	public void setManager(EntityManager manager) {
